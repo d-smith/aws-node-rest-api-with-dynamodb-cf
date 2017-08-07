@@ -2,11 +2,8 @@
 # Serverless REST API
 
 Note: this example was taken directly from the [serverless examples repository](https://github.com/serverless/examples/tree/master/aws-node-rest-api-with-dynamodb) and 
-was adapted to create resources from a 'foundation' cloud formation template, onto which
-the REST API was layered. This is better aligned with a longer living application which
-might define the underlying database structures relatively infrequently, but deploy new
-or modified services on top of those structure relatively frequently, with the intent
-of preserving the underlying data.
+was adapted to create the resource outside the serverless config, for those cases where you might
+want to use resources that are managed independently from the serverless project.
 
 This example demonstrates how to setup a [RESTful Web Services](https://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services) allowing you to create, list, get, update and delete Todos. DynamoDB is used to store the data. This is just an example and of course you could use any data storage as a backend.
 
@@ -28,6 +25,14 @@ npm install
 ```
 
 ## Deploy
+
+Before deploying the serverless app, you need to create its stack dependencies,
+specifically the dynamo db table:
+
+```bash
+aws cloudformation create-stack --stack-name sample-db --template-body file://db.yml
+```
+
 
 In order to deploy the endpoint simply run
 
