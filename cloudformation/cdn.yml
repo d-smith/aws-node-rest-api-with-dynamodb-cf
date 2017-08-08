@@ -1,0 +1,58 @@
+# CDN that serves both static content from an s3 bucket and
+# API traffic as well.
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  APIEndpoint:
+    Type: String
+  S3SiteEndpoint:
+    Type: String
+
+Resources:
+  WebpageCDN:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        DefaultCacheBehavior:
+          ForwardedValues:
+            QueryString: true
+          TargetOriginId: webpage
+          ViewerProtocolPolicy: redirect-to-https
+        CacheBehaviors:
+          - AllowedMethods:
+              - DELETE
+              - GET
+              - HEAD
+              - OPTIONS
+              - PATCH
+              - POST
+              - PUT
+            CachedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+            Compress: true
+            ForwardedValues:
+              Headers:
+                - Accept
+                - Referer
+                - Authorization
+                - Content-Type
+              QueryString: true
+            PathPattern: "/todos/*"
+            TargetOriginId: api
+            ViewerProtocolPolicy: https-only
+        DefaultRootObject: index.html
+        Enabled: true
+        Origins:
+          - DomainName: !Ref S3SiteEndpoint
+            Id: webpage
+            S3OriginConfig:
+              OriginAccessIdentity:
+                Ref: AWS::NoValue
+          - DomainName: !Ref APIEndpoint
+            Id: api
+            CustomOriginConfig:
+              OriginProtocolPolicy: https-only
+            OriginPath: /cuckoo
+        PriceClass: PriceClass_100
