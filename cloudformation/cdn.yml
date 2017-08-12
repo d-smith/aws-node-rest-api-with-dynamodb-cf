@@ -5,8 +5,10 @@ AWSTemplateFormatVersion: '2010-09-09'
 Parameters:
   APIEndpoint:
     Type: String
+    Description: Gateway stage api endpoint domain part, e.g. <api-id>.execute-api.us-east-1.amazonaws.com
   S3SiteEndpoint:
     Type: String
+    Description: Bucket domain, for example in us-east-1 looks like <bucket-name>.s3.amazonaws.com
 
 Resources:
   WebpageCDN:
