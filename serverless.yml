@@ -4,7 +4,9 @@ frameworkVersion: ">=1.1.0 <2.0.0"
 
 provider:
   name: aws
-  runtime: nodejs4.3
+  runtime: nodejs6.10
+  apiKeys:
+    - todoAPIKey-${opt:stage, self:provider.stage}
   environment:
     DYNAMODB_TABLE: ${cf:sample-db.TableName}
   iamRoleStatements:
@@ -25,6 +27,7 @@ functions:
       - http:
           path: todos
           method: post
+          private: true
           cors: true
 
   list:
@@ -33,6 +36,7 @@ functions:
       - http:
           path: todos
           method: get
+          private: true
           cors: true
 
   get:
@@ -41,6 +45,7 @@ functions:
       - http:
           path: todos/{id}
           method: get
+          private: true
           cors: true
 
   update:
@@ -49,6 +54,7 @@ functions:
       - http:
           path: todos/{id}
           method: put
+          private: true
           cors: true
 
   delete:
@@ -57,6 +63,7 @@ functions:
       - http:
           path: todos/{id}
           method: delete
+          private: true
           cors: true
 
 

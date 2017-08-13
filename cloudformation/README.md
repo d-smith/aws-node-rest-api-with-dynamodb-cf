@@ -16,3 +16,30 @@ name with the Cloud Front distribution embedding the API url as an origin
 * Associate a CNAME in the cloud front distribution that is part of the domain
 indicated in the certificate. This will be the API endpoint that clients will use.
 * Create a route 53 alias using the CNAME that points to the cloud front distribution.
+
+## Create the API Gateway Apps
+
+This sample provides a serverless application - create the DynamoDB table in the regions you with to deploy to, then deploy the serverless app via `serverless deploy`
+
+## Create the Cloud Front Distribution
+
+Use the provided CDN cloud formation template. This template currently uses two origins - one is an s3 bucket configured to host a web site, the other an API gateway endpoint. For
+troubleshooting purposes it is useful to have content in an S3 bucket available to 
+through the cloud front distribution, but is probably not necessary.
+
+For inputs, use the API gateway stage endpoint as the APIEndpoint parameter value, and 
+the bucket domain as the S3SiteEndpoint arg.
+
+For example
+
+
+
+# TODO
+* Add API key in serverless definition
+
+Can add a key and plan manually, then edit the resources in the stage manually to 
+require a key. Manually, select the resource, then click the method links to require API
+keys. Note you will have to click the little check mark next to the 'API key required'
+choice on the page to save the edit.
+
+* API Key Synchronization between regions
