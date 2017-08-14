@@ -5,6 +5,7 @@ const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-depe
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 module.exports.get = (event, context, callback) => {
+  console.log(event)
   const params = {
     TableName: process.env.DYNAMODB_TABLE,
     Key: {

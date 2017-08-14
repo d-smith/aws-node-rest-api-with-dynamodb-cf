@@ -12,12 +12,21 @@ Parameters:
   APIStage:
     Type: String
     Description: Stage name of API deployment
+  CName:
+    Type: String
+    Description: CName alias
+  CertificateArn:
+    Type: String
+    Description: ACM Certificate name to associate with the CloudFront distribution.
+  
 
 Resources:
   WebpageCDN:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
+        Aliases:
+          - !Ref CName
         DefaultCacheBehavior:
           ForwardedValues:
             QueryString: true
@@ -43,6 +52,7 @@ Resources:
                 - Referer
                 - Authorization
                 - Content-Type
+                - x-api-key
               QueryString: true
             PathPattern: "/todos/*"
             TargetOriginId: api
@@ -61,3 +71,6 @@ Resources:
               OriginProtocolPolicy: https-only
             OriginPath: !Join ['/', ['', !Ref APIStage]]
         PriceClass: PriceClass_100
+        ViewerCertificate:
+          AcmCertificateArn: !Ref CertificateArn
+          SslSupportMethod: "sni-only"

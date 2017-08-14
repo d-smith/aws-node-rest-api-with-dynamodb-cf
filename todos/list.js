@@ -8,6 +8,7 @@ const params = {
 };
 
 module.exports.list = (event, context, callback) => {
+  console.log(event);
   // fetch all todos from the database
   dynamoDb.scan(params, (error, result) => {
     // handle potential errors
