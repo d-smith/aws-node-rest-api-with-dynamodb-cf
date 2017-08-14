@@ -25,21 +25,14 @@ This sample provides a serverless application - create the DynamoDB table in the
 
 Use the provided CDN cloud formation template. This template currently uses two origins - one is an s3 bucket configured to host a web site, the other an API gateway endpoint. For
 troubleshooting purposes it is useful to have content in an S3 bucket available to 
-through the cloud front distribution, but is probably not necessary.
+through the cloud front distribution.
 
 For inputs, use the API gateway stage endpoint as the APIEndpoint parameter value, and 
-the bucket domain as the S3SiteEndpoint arg.
+the bucket domain as the S3SiteEndpoint arg. The API stage is also an important input.
 
-For example
 
 
 
 # TODO
-* Add API key in serverless definition
-
-Can add a key and plan manually, then edit the resources in the stage manually to 
-require a key. Manually, select the resource, then click the method links to require API
-keys. Note you will have to click the little check mark next to the 'API key required'
-choice on the page to save the edit.
 
 * API Key Synchronization between regions

@@ -9,6 +9,9 @@ Parameters:
   S3SiteEndpoint:
     Type: String
     Description: Bucket domain, for example in us-east-1 looks like <bucket-name>.s3.amazonaws.com
+  APIStage:
+    Type: String
+    Description: Stage name of API deployment
 
 Resources:
   WebpageCDN:
@@ -56,5 +59,5 @@ Resources:
             Id: api
             CustomOriginConfig:
               OriginProtocolPolicy: https-only
-            OriginPath: /cuckoo
+            OriginPath: !Join ['/', ['', !Ref APIStage]]
         PriceClass: PriceClass_100
